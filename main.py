@@ -1,6 +1,7 @@
 from classes.player import Player
-
+from classes.enemy import Enemy
 def main(): 
+    print("-----------------------------------")
     print("Welcome to Steel and Glory.")
     print("1. New Game")
     print("2. Load Game")
@@ -20,6 +21,33 @@ def main():
 if __name__ == "__main__":
     main()
 
+def test_enemy():
+    # Create Enemy
+    enemy = Enemy("Enemy", 1, 25, 20, 50)
+    print("Initial stats:")
+    print(enemy)
+
+    # Tests attack
+    damage = enemy.attack()
+    print(f"Enemy attacks for {damage} damage!")
+
+    # Tests taking damage
+    print("\nTaking 30 damage...")
+    enemy.take_damage(5)
+    print(enemy)
+
+
+    # On enemy death displays a random item from possible loot and displays exp gained
+    print("Killing and dropping loot..")
+    enemy.take_damage(50)
+    print(enemy.is_alive())
+    print(enemy)
+
+if __name__ == "__main__":
+    test_enemy()
+
+
+
 def test_player():
     # Create a player
     hero = Player("Hero")
@@ -28,7 +56,7 @@ def test_player():
     
     # Test attack
     damage = hero.attack()
-    print(f"Hero attacks for {damage:.2f} damage!")
+    print(f"Hero attacks for {damage} damage!")
     
     # Test taking damage
     print("\nTaking 30 damage...")
@@ -44,6 +72,3 @@ def test_player():
     print("Gaining 150 exp...")
     hero.gain_exp(150)  # This should trigger a level up
     print(hero)
-
-if __name__ == "__main__":
-    test_player()

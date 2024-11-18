@@ -13,8 +13,8 @@ class Player:
 
     def level_up(self):
         self.level += 1
-        self.max_hp += 10
-        self.strength += 8
+        self.max_hp += 50
+        self.strength += 25
         self.hp = self.max_hp
         
     def take_damage(self, amount):
@@ -41,7 +41,8 @@ class Player:
             return False
     
     def attack(self):
-        damage = self.strength * random.random()
+        multipliers = [0.5, 1.0, 1.2, 1.4, 1.5, 1.8, 2.0]
+        damage = self.strength * (random.choice(multipliers))
         return damage
     
     def __str__(self):
