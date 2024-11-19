@@ -6,7 +6,7 @@ class Player:
         self.level = 1
         self.hp = 100
         self.max_hp = 100
-        self.strength = 25
+        self.strength = 40
         self.exp = 0
         self.inventory = []
 
@@ -45,11 +45,14 @@ class Player:
         damage = self.strength * (random.choice(multipliers))
         return damage
     
+    # Status display
     def __str__(self):
         return f"""
-    {self.name}'s Status:
-    Level: {self.level}
-    HP: {self.hp}/{self.max_hp}
-    Strength: {self.strength}
-    EXP: {self.exp}/100
-    """
+        ┌{'─'*30}┐
+        │ {self.name}'s Status:
+        │ Level: {self.level}
+        │ HP: {self.hp}/{self.max_hp}
+        │ Strength: {self.strength}
+        │ EXP: {self.exp}    
+        └{'─'*30}┘
+        """   

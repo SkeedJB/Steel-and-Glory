@@ -3,13 +3,15 @@ from classes.enemy import Enemy
 import random
 
 def main(): 
-    print("-----------------------------------")
-    print("Welcome to Steel and Glory.")
+    print("""
+    =====================================
+    =     WELCOME TO STEEL AND GLORY    =
+    =====================================""")
     print("1. New Game")
     print("2. Load Game")
     print("3. Quit")
 
-    choice = input("Enter your choice: (1, 2, 3) ")
+    choice = input("Enter your choice:")
     if choice == "1":
         print("Starting new game...")
     elif choice == "2":
@@ -23,57 +25,12 @@ def main():
 if __name__ == "__main__":
     main()
 
-def test_enemy():
-    # Create Enemy
-    enemy = Enemy("Enemy", 1, 25, 20, 50)
-    print("Initial stats:")
-    print(enemy)
-
-    # Tests attack
-    damage = enemy.attack()
-    print(f"Enemy attacks for {damage} damage!")
-
-    # Tests taking damage
-    print("\nTaking 30 damage...")
-    enemy.take_damage(5)
-    print(enemy)
-
-
-    # On enemy death displays a random item from possible loot and displays exp gained
-    print("Killing and dropping loot..")
-    enemy.take_damage(50)
-    print(enemy.is_alive())
-    print(enemy)
-
-
-def test_player():
-    # Create a player
-    hero = Player("Hero")
-    print("Initial status:")
-    print(hero)
-    
-    # Test attack
-    damage = hero.attack()
-    print(f"Hero attacks for {damage} damage!")
-    
-    # Test taking damage
-    print("\nTaking 30 damage...")
-    hero.take_damage(30)
-    print(hero)
-    
-    # Test healing
-    print("Healing 20 HP...")
-    hero.heal(20)
-    print(hero)
-    
-    # Test gaining exp and leveling up
-    print("Gaining 150 exp...")
-    hero.gain_exp(150)  # This should trigger a level up
-    print(hero)
-
 # Basic combat loop
 def simple_combat(player, enemy):
     print(f"As the iron door opens, a fierce {enemy.name} comes into the ring.")
+    print("\n" + "="*40)
+    print(f"⚔️  BATTLE START: {player.name} vs {enemy.name}  ⚔️")
+    print("="*40)
 
     while player.is_alive() and enemy.is_alive():
         # Displays player stats and enemy stats
@@ -117,7 +74,9 @@ def simple_combat(player, enemy):
 
         # Combat results 
     if player.is_alive():
-        print(f"You defeated the {enemy.name}!")
+        print("\n" + "*"*40)
+        print(f"You defeated the {enemy.name}! 🏆")
+        print("*"*40)
         # Gain exp
         exp_gained = enemy.get_exp_gain()
         player.gain_exp(exp_gained)
@@ -127,9 +86,10 @@ def simple_combat(player, enemy):
         print(f"You found: {loot}")
         return True
     else:
-        print("You were defeated...")
+        print("\n" + "x"*40)
+        print("💀 You were defeated... 💀")
+        print("x"*40)
         return False
-    
 
 
 # Main game loop
@@ -140,8 +100,9 @@ def main():
     
     # Game loop
     while player.is_alive():
-        # Create an enemy
-        enemy = Enemy("Goblin", level=1, strength_multiplier=10, exp_gain=50, hp_multiplier=20)
+        
+        # Generate enemy
+        enemy = Enemy.generate_enemy(player.level)
         
         # Start combat
         combat_result = simple_combat(player, enemy)
@@ -150,7 +111,7 @@ def main():
             break
         
         # Ask to continue
-        continue_game = input("Continue adventuring? (y/n): ")
+        continue_game = input("Continue fighting? (y/n): ")
         if continue_game.lower() != 'y':
             break
     
