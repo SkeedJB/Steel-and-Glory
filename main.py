@@ -38,13 +38,18 @@ def simple_combat(player, enemy):
         print(str(enemy))
 
         # Player Turn
-        print("\nYour Move:")
-        print("1. Attack")
-        print("2. Heal")
+        print("\n" + "─"*40)
+        print("Your turn:")
+        print("┌─────────────┐")
+        print("│ 1. Attack   │")
+        print("│ 2. Heal     │")
+        print("└─────────────┘")
         choice = input("Enter your choice:")
 
         # Attack functions
         if choice == "1":
+            
+            print("\n" + ">"*20 + " ATTACK! " + "<"*20)
             
             # Player turn
             player_damage = player.attack()
@@ -54,12 +59,15 @@ def simple_combat(player, enemy):
             # Enemy turn if alive
             if enemy_alive:
                 enemy_damage = enemy.attack()
-                print(f"{enemy.name} attacks you for {enemy_damage:.2f} damage!")
+                print(f"{enemy.name} strikes for {enemy_damage:.2f} damage!")
                 player.take_damage(enemy_damage)
 
 
         # Heal functions
         elif choice == "2":
+
+            print("\n" + ">"*20 + " HEAL! " + "<"*20)
+
             heal_amount = random.randint(10,25)
             player.heal(heal_amount)
             print(f"You heal for {heal_amount} HP")

@@ -2,18 +2,19 @@ import random
 
 # Creates variable enemy types
 class EnemyType:
-    def __init__(self, strength_multiplier, hp_multiplier, exp_gain):
+    def __init__(self, name, strength_multiplier, hp_multiplier, exp_gain):
+        self.name = name
         self.strength_multiplier = strength_multiplier
         self.hp_multiplier = hp_multiplier
         self.exp_gain = exp_gain
 
         # Predefined enemy types
-GOBLIN = EnemyType(strength_multiplier=15, hp_multiplier=30, exp_gain=20)
-DRAGON = EnemyType(strength_multiplier=80, hp_multiplier=150, exp_gain=250)
-ORC = EnemyType(strength_multiplier=20, hp_multiplier=50, exp_gain=40)
-TROLL = EnemyType(strength_multiplier=23, hp_multiplier=80, exp_gain=60)
-OGRE = EnemyType(strength_multiplier=30, hp_multiplier=100, exp_gain=80)
-DEMON = EnemyType(strength_multiplier=100, hp_multiplier=200, exp_gain=300)
+GOBLIN = EnemyType("Goblin", strength_multiplier=15, hp_multiplier=30, exp_gain=20)
+DRAGON = EnemyType("Dragon", strength_multiplier=80, hp_multiplier=150, exp_gain=250)
+ORC = EnemyType("Orc", strength_multiplier=20, hp_multiplier=50, exp_gain=40)
+TROLL = EnemyType("Troll", strength_multiplier=23, hp_multiplier=80, exp_gain=60)
+OGRE = EnemyType("Ogre", strength_multiplier=30, hp_multiplier=100, exp_gain=80)
+DEMON = EnemyType("Demon", strength_multiplier=100, hp_multiplier=200, exp_gain=300)
 
 ENEMY_POOLS = {
             "early": [GOBLIN, ORC],
@@ -72,11 +73,13 @@ class Enemy:
 
     def __str__(self):
         return f"""
-    {self.name}'s Status:
-    Level: {self.level}
-    HP: {self.hp}/{self.max_hp}
-    Strength: {self.strength}
-    """
+        ┌{'='*30}┐
+        │ {self.name}'s Status:
+        │ Level: {self.level}
+        │ HP: {self.hp}/{self.max_hp}
+        │ Strength: {self.strength}    
+        └{'='*30}┘
+        """   
 
     # Scale and generate enemies with player level
     def generate_enemy(player_level):
@@ -104,6 +107,6 @@ class Enemy:
 
         enemy_type = random.choice(pool)
 
-        return Enemy(f"{enemy_prefix} {type(enemy_type).__name__}",
-                      enemy_level, enemy_type)
+        enemy_name = f"{enemy_prefix} {enemy_type.name}"
+        return Enemy(enemy_name, enemy_level, enemy_type)
 
