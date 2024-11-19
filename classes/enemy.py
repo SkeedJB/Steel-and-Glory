@@ -50,19 +50,13 @@ class Enemy:
     def take_damage(self, amount):
         self.hp -= amount
         if self.hp <= 0:
-            self.drop_loot()
-        else:
-            return True
+            return False
+        return True
         
     # Checks if enemy still has hp remaining    
     def is_alive(self):
-        if self.hp > 0:
-            return True
-        else:
-            print(f"""    
-    Items Dropped on Death: {self.drop_loot()}
-    EXP Gained: {self.get_exp_gain()}""")
-        
+        return self.hp > 0
+
     def attack(self):
         multipliers = [0.5, 1.0, 1.2, 1.4, 1.5, 2.0]
         damage = self.strength * (random.choice(multipliers))

@@ -1,5 +1,6 @@
 from classes.player import Player
 from classes.enemy import Enemy
+from classes.item import Item, WEAPON_POOL, POTION_POOL, ItemType
 import random
 
 def main(): 
@@ -42,7 +43,8 @@ def simple_combat(player, enemy):
         print("Your turn:")
         print("┌─────────────┐")
         print("│ 1. Attack   │")
-        print("│ 2. Heal     │")
+        print("│ 2. Item     │")
+        print("│ 3. Check Inv│")
         print("└─────────────┘")
         choice = input("Enter your choice:")
 
@@ -53,7 +55,7 @@ def simple_combat(player, enemy):
             
             # Player turn
             player_damage = player.attack()
-            print(f"You attack and deal {player_damage:.2f} damage!")
+            print(f"⚔️You attack and deal {player_damage:.2f} damage!⚔️")
             enemy_alive = enemy.take_damage(player_damage)
 
             # Enemy turn if alive
@@ -63,22 +65,35 @@ def simple_combat(player, enemy):
                 player.take_damage(enemy_damage)
 
 
-        # Heal functions
+        # Item use functions
         elif choice == "2":
 
-            print("\n" + ">"*20 + " HEAL! " + "<"*20)
+            print("\n" + ">"*20 + " ITEM! " + "<"*20)
+            player.show_inventory()
+            if len(player.inventory) > 0:
+                item_choice = int(input("Choose item number: (0 to cancel)")) - 1
+                if item_choice >= -1:
+                    if item_choice == -1:
+                        print("Canceled item use.")
+                    else:
+                        item = player.inventory[item_choice]
+                if item.item_type == "POTION":
+                    print(f"\n❤️ You heal for {item.value} HP!")
+                elif item.item_type == "WEAPON":
+                    print(f"\n⚔️ You equip the {item.name}!")
+                player.use_item(item_choice)
 
-            heal_amount = random.randint(10,25)
-            player.heal(heal_amount)
-            print(f"You heal for {heal_amount} HP")
+            # Enemy attack after item use
+                enemy_damage = enemy.attack()
+                print(f"⚔️ {enemy.name} attacks you for {enemy_damage:.2f} damage!⚔️")
+                player.take_damage(enemy_damage)
 
-            # Enemy attack after heal
-            enemy_damage = enemy.attack()
-            print(f"{enemy.name} attacks you for {enemy_damage:.2f} damage!")
-            player.take_damage(enemy_damage)
+        elif choice == "3":
+            player.show_inventory()
+            input("Press Enter to continue...")
 
         else:
-            print("Invalid choice. Turn lost.")
+            print("Invalid choice. Turn Lost")
 
         # Combat results 
     if player.is_alive():
@@ -89,9 +104,14 @@ def simple_combat(player, enemy):
         exp_gained = enemy.get_exp_gain()
         player.gain_exp(exp_gained)
         print(f"You gained {exp_gained} EXP!")
-        # Get loot
-        loot = enemy.drop_loot()
-        print(f"You found: {loot}")
+        # Get loot: 50% chance of loot drop, then 50% chance if weapon or potion
+        if random.random() < 0.5:
+            if random.random() < 0.5:
+                dropped_item = Item(random.choice(WEAPON_POOL))
+            else:
+                dropped_item = Item(random.choice(POTION_POOL))
+            print(f"You found: {dropped_item}")
+            player.add_item(dropped_item)
         return True
     else:
         print("\n" + "x"*40)
@@ -106,6 +126,11 @@ def main():
     player_name = input("Enter your character's name: ")
     player = Player(player_name)
     
+    # Gives player random starting items
+    player.add_item(Item(random.choice(WEAPON_POOL)))
+    player.add_item(Item(random.choice(POTION_POOL)))
+
+
     # Game loop
     while player.is_alive():
         
