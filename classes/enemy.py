@@ -9,12 +9,12 @@ class EnemyType:
         self.exp_gain = exp_gain
 
         # Predefined enemy types
-GOBLIN = EnemyType("Goblin", strength_multiplier=15, hp_multiplier=30, exp_gain=20)
-DRAGON = EnemyType("Dragon", strength_multiplier=80, hp_multiplier=150, exp_gain=250)
-ORC = EnemyType("Orc", strength_multiplier=20, hp_multiplier=50, exp_gain=40)
-TROLL = EnemyType("Troll", strength_multiplier=23, hp_multiplier=80, exp_gain=60)
-OGRE = EnemyType("Ogre", strength_multiplier=30, hp_multiplier=100, exp_gain=80)
-DEMON = EnemyType("Demon", strength_multiplier=100, hp_multiplier=200, exp_gain=300)
+GOBLIN = EnemyType("Goblin", strength_multiplier=8, hp_multiplier=20, exp_gain=20)
+DRAGON = EnemyType("Dragon", strength_multiplier=35, hp_multiplier=100, exp_gain=250)
+ORC = EnemyType("Orc", strength_multiplier=12, hp_multiplier=35, exp_gain=40)
+TROLL = EnemyType("Troll", strength_multiplier=15, hp_multiplier=50, exp_gain=60)
+OGRE = EnemyType("Ogre", strength_multiplier=20, hp_multiplier=70, exp_gain=80)
+DEMON = EnemyType("Demon", strength_multiplier=40, hp_multiplier=120, exp_gain=300)
 
 ENEMY_POOLS = {
             "early": [GOBLIN, ORC],

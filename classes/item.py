@@ -9,12 +9,12 @@ class ItemType:
 
 
 # Starter Items
-COPPER_SWORD = ItemType("Copper Sword", "WEAPON", 10)
-STEEL_SWORD = ItemType("Steel Sword", "WEAPON", 25)
-IRON_SPEAR = ItemType("Iron Spear", "WEAPON", 20)
-SMALL_POTION = ItemType("Small Potion", "POTION", 30)
-POTION = ItemType("Potion", "POTION", 60)
-LARGE_POTION = ItemType("Large Potion", "POTION", 100)
+COPPER_SWORD = ItemType("Copper Sword", "WEAPON", 5)
+STEEL_SWORD = ItemType("Steel Sword", "WEAPON", 12)
+IRON_SPEAR = ItemType("Iron Spear", "WEAPON", 8)
+SMALL_POTION = ItemType("Small Potion", "POTION", 20)
+POTION = ItemType("Potion", "POTION", 40)
+LARGE_POTION = ItemType("Large Potion", "POTION", 60)
 
 # Pool of items to grab from
 WEAPON_POOL = [COPPER_SWORD, IRON_SPEAR, STEEL_SWORD]

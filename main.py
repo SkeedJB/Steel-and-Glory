@@ -1,32 +1,43 @@
 from classes.player import Player
 from classes.enemy import Enemy
 from classes.item import Item, WEAPON_POOL, POTION_POOL, ItemType
+from utils.game_data import save_game, load_game, delete_save
 import random
 
-def main(): 
-    print("""
-    =====================================
-    =     WELCOME TO STEEL AND GLORY    =
-    =====================================""")
-    print("1. New Game")
-    print("2. Load Game")
-    print("3. Quit")
+def main():
+    while True: 
+        print("""
+        =====================================
+        =     WELCOME TO STEEL AND GLORY    =
+        =====================================""")
+        print("1. New Game")
+        print("2. Load Game")
+        print("3. Delete Save")
+        print("4. Quit")
 
-    choice = input("Enter your choice:")
-    if choice == "1":
-        print("Starting new game...")
-    elif choice == "2":
-        print("Loading game...")
-    elif choice == "3":
-        print("See you soon.")
-        return
-    else:
-        print("Invalid choice!")
+        choice = input("Enter your choice:")
+        if choice == "1":
+            print("Starting new game...")
+            player_name = input("Enter your character's name: ")
+            player = Player(player_name)
+            # Gives starting items
+            # Gives player random starting items
+            player.add_item(Item(random.choice(WEAPON_POOL)))
+            player.add_item(Item(random.choice(POTION_POOL)))
+            game_loop(player)
+        elif choice == "2":
+            player = load_game()
+            if player is not None:
+                game_loop(player)
+        elif choice == "3":
+            delete_save()
+        elif choice == "4":
+            print("See you soon.")
+            return
+        else:
+            print("Invalid choice!")
 
-if __name__ == "__main__":
-    main()
-
-# Basic combat loop
+    # Basic combat loop
 def simple_combat(player, enemy):
     print(f"As the iron door opens, a fierce {enemy.name} comes into the ring.")
     print("\n" + "="*40)
@@ -120,16 +131,8 @@ def simple_combat(player, enemy):
         return False
 
 
-# Main game loop
-def main():
-    # Create player
-    player_name = input("Enter your character's name: ")
-    player = Player(player_name)
-    
-    # Gives player random starting items
-    player.add_item(Item(random.choice(WEAPON_POOL)))
-    player.add_item(Item(random.choice(POTION_POOL)))
-
+    # Main game loop
+def game_loop(player):
 
     # Game loop
     while player.is_alive():
@@ -143,9 +146,18 @@ def main():
         if not combat_result:
             break
         
-        # Ask to continue
-        continue_game = input("Continue fighting? (y/n): ")
-        if continue_game.lower() != 'y':
+        # Ask to continue, save, or quit
+        print("\n1. Continue fighting")
+        print("2. Save and return to menu")
+        print("3. Quit without saving")
+        choice = input("Choose an option: ")
+        
+        if choice == "1":
+            continue
+        elif choice == "2":
+            save_game(player)
+            return
+        else:
             break
     
     print("Game Over!")

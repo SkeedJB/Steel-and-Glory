@@ -7,7 +7,7 @@ class Player:
         self.level = 1
         self.hp = 100
         self.max_hp = 100
-        self.strength = 40
+        self.strength = 15
         self.exp = 0
         self.inventory = []
         self.equipped_weapon = None
@@ -57,8 +57,8 @@ class Player:
             
     def level_up(self):
         self.level += 1
-        self.max_hp += 50
-        self.strength += 25
+        self.max_hp += 20
+        self.strength += 8
         self.hp = self.max_hp
         
     def take_damage(self, amount):
